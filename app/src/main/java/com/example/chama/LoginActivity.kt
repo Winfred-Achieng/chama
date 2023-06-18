@@ -76,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-
+//the button for sign in with gmail option
         googleSignin.setOnClickListener {
             oneTapClient.beginSignIn(signInRequest)
                 .addOnSuccessListener(this) { result ->
@@ -94,7 +94,6 @@ class LoginActivity : AppCompatActivity() {
                     Log.d(TAG, e.localizedMessage)
                 }
         }
-
 
 
 
