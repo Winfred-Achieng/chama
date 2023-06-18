@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "492199430350",
+    "project_id": "chama-370c7",
+    "storage_bucket": "chama-370c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:492199430350:android:bb5b70a65ded716936689f",
+        "android_client_info": {
+          "package_name": "com.example.chama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "492199430350-ts19gv5gb2bvagca90q53a5jm5kenmoh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chama",
+            "certificate_hash": "a82e7b6c79d703a0ea1905992bcff1c52567212b"
+          }
+        },
+        {
+          "client_id": "492199430350-n5pl92i63acj43b5j2sn97e8u0okm913.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ072nfZqW1vekUMvp5OYSWp-nVqpeTDw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "492199430350-9vh07qf2iuokthuiqujok0j7mu1fntp8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
