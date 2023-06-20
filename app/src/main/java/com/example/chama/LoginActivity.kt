@@ -1,16 +1,24 @@
 package com.example.chama
 
+import android.app.KeyguardManager
 import android.content.ContentValues.TAG
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.IntentSender
+import android.content.pm.PackageManager
+import android.hardware.biometrics.BiometricPrompt
+import android.os.Build
 import android.os.Bundle
+import android.os.CancellationSignal
 import android.text.Editable
 import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.chama.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -36,8 +44,32 @@ private lateinit var signInRequest: BeginSignInRequest
 
 
 class LoginActivity : AppCompatActivity() {
+
+    private var cancellationSignal:CancellationSignal?=null
+
+    private val authenticationCallback:BiometricPrompt.AuthenticationCallback
+        get() =
+            @RequiresApi(Build.VERSION_CODES.P)
+            object:BiometricPrompt.AuthenticationCallback(){
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence?) {
+                    super.onAuthenticationError(errorCode, errString)
+                    notifyUser("Authentication error: $errString")
+                }
+
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
+                    super.onAuthenticationSucceeded(result)
+                    notifyUser("Authentication success!")
+                    startActivity(Intent(this@LoginActivity,fingerprintActivity::class.java))
+                }
+            }
+    @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        checkBiometricSupport()
+
+
+
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
         val guideLinesTv = binding.guidelinesTextView
         val showPasswordCheckbox = binding.showPasswordCheckbox
         val googleSignin =binding.googleSignin
+        val authentication= binding.authenticatebtn
 
 
 
@@ -128,6 +161,21 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        authentication.setOnClickListener{
+
+            val biometricPrompt= BiometricPrompt.Builder(this)
+                .setTitle("Title of Prompt")
+                .setSubtitle("Authentication is required ")
+                .setDescription("This app uses fingerprint protection to keep your data secure")
+                .setNegativeButton("Cancel",this.mainExecutor,DialogInterface.OnClickListener { dialog, which ->
+                    notifyUser("Authentication cancelled")
+                }).build()
+            biometricPrompt.authenticate(getCancellationSignal(),mainExecutor,authenticationCallback)
+
+
+        }
+
+
         // Set a TextWatcher on the password EditText
         password.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -146,6 +194,36 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
+    private fun notifyUser(message:String){
+
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show()
+    }
+
+    private fun getCancellationSignal(): CancellationSignal{
+        cancellationSignal= CancellationSignal()
+        cancellationSignal?.setOnCancelListener {
+            notifyUser("Authentication was cancelled by the user")
+        }
+        return cancellationSignal as CancellationSignal
+    }
+
+
+    private fun checkBiometricSupport(): Boolean {
+
+        val keyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
+
+        if(!keyguardManager.isKeyguardSecure){
+            notifyUser("Fingerprint authentication has not been enabled is the settings")
+            return false
+        }
+        if(ActivityCompat.checkSelfPermission(this,android.Manifest.permission.USE_BIOMETRIC)!=PackageManager.PERMISSION_GRANTED){
+            notifyUser("Fingerprint authentication permission is not enabled")
+            return false
+        }
+        return if (packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)){
+            true
+        }else true
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
