@@ -10,25 +10,28 @@
     <EditText
         android:id="@+id/email"
         android:hint="Enter Email"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"
         android:backgroundTint="@color/maroon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="170dp"/>
+        android:layout_height="48dp"
+        android:layout_marginTop="150dp"/>
 
     <EditText
         android:id="@+id/password"
         android:inputType="textPassword"
         android:hint="Password"
+        android:autofillHints="password"
         android:backgroundTint="@color/maroon"
         android:layout_marginTop="60dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="48dp"/>
 
     <TextView
 
@@ -52,45 +55,46 @@
         android:id="@+id/login"
         android:text="LOGIN"
         android:backgroundTint="@color/green"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="22dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/password"
+        app:layout_constraintTop_toBottomOf="@id/forgotPasswordClickableText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <Button
         android:id="@+id/googleSignin"
         android:text="Sign in with google"
         android:backgroundTint="@color/green"
-        android:layout_marginTop="85dp"
+        android:layout_marginTop="65dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
-    <Button
-        android:id="@+id/forgotPassword"
-        android:text="forgot password"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/grr"
-        android:layout_marginTop="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"/>
 
-    <Button
-        android:id="@+id/authenticatebtn"
+
+    <TextView
+        android:id="@+id/forgotPasswordClickableText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fingerprint"
-        android:backgroundTint="@color/green"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/showPasswordCheckbox"
+        android:text="Forgot Password?"
+        android:textColor="@color/blue"
+        android:clickable="true" />
+
+
+    <ImageView
+        android:id="@+id/fingerprintImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/googleSignin"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        android:src="@drawable/ic_fingerprint"
+
+         />
+
 
 
 

@@ -1,6 +1,7 @@
 package com.example.chama
 
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,13 +9,18 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -25,6 +31,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var registerBtn: Button
     private lateinit var guideLinesTv: TextView
     private lateinit var showPasswordCheckbox: CheckBox
+
 
     private lateinit var auth: FirebaseAuth;
 
@@ -39,6 +46,9 @@ class RegisterActivity : AppCompatActivity() {
         registerBtn = findViewById(R.id.register)
         guideLinesTv = findViewById(R.id.guidelinesTextView)
         showPasswordCheckbox = findViewById(R.id.showPasswordCheckbox)
+
+
+
 
         guideLinesTv.setTextColor(ContextCompat.getColor(this, R.color.red))
 
@@ -87,6 +97,7 @@ class RegisterActivity : AppCompatActivity() {
         })
 
     }
+
 
     private fun registerUser(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
