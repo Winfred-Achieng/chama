@@ -15,6 +15,7 @@ import android.text.InputType
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +33,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.android.gms.common.SignInButton
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 
 private lateinit var binding: ActivityLoginBinding
@@ -59,7 +65,8 @@ class LoginActivity : AppCompatActivity() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
                     super.onAuthenticationSucceeded(result)
                     notifyUser("Authentication success!")
-                    startActivity(Intent(this@LoginActivity,fingerprintActivity::class.java))
+                    startActivity(Intent(this@LoginActivity,MainActivity::class.java))
+                    finish()
                 }
             }
     @RequiresApi(Build.VERSION_CODES.P)
@@ -84,6 +91,37 @@ class LoginActivity : AppCompatActivity() {
         val showPasswordCheckbox = binding.showPasswordCheckbox
         val googleSignin =binding.googleSignin
         val authentication= binding.fingerprintImageView
+
+
+
+// Create an empty list to hold the email suggestions
+        val emailSuggestions = mutableListOf<String>()
+
+// Fetch the list of registered emails from Firebase
+        val firebaseRef = FirebaseDatabase.getInstance().getReference("users")
+        firebaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Iterate through the dataSnapshot and add each email to the emailSuggestions list
+                for (snapshot in dataSnapshot.children) {
+                    val email = snapshot.child("email").value?.toString()
+                    if (!email.isNullOrEmpty()) {
+                        emailSuggestions.add(email)
+                    }
+                }
+
+                // Create an ArrayAdapter with the email suggestions
+                val adapter = ArrayAdapter(this@LoginActivity, android.R.layout.simple_dropdown_item_1line, emailSuggestions.toTypedArray())
+
+                // Set the adapter to the AutoCompleteTextView
+                email.setAdapter(adapter)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle the error if fetching data from Firebase fails
+               Toast.makeText(this@LoginActivity,"fetching data from Firebase failed",Toast.LENGTH_SHORT).show()
+            }
+        })
+
 
 
 
@@ -124,11 +162,17 @@ class LoginActivity : AppCompatActivity() {
             val txtEmail = email.text.toString()
             val txtPassword = password.text.toString()
 
-            if (isPasswordValid(txtPassword)) {
-                loginUser(txtEmail, txtPassword)
-            } else {
-                val guidelines = getPasswordGuidelines(txtPassword)
-                Toast.makeText(this, guidelines, Toast.LENGTH_SHORT).show()
+            if (TextUtils.isEmpty(txtEmail) || TextUtils.isEmpty(txtPassword)) {
+                Toast.makeText(this, "Empty credentials", Toast.LENGTH_SHORT).show()
+            } //else if (password.length <= 8){
+            // Toast.makeText(this,"password must be at least 8 characters long.",Toast.LENGTH_SHORT).show()
+            // }
+            else if (!isPasswordValid(txtPassword)) {
+                Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                loginUser(txtEmail,txtPassword)
             }
         }
 

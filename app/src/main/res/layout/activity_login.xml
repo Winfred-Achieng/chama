@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/email"
         android:hint="Enter Email"
         android:inputType="textEmailAddress"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="140dp"/>
 
     <EditText
         android:id="@+id/password"
@@ -55,16 +55,32 @@
         android:id="@+id/login"
         android:text="LOGIN"
         android:backgroundTint="@color/green"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/forgotPasswordClickableText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/ORText"
+        android:text="OR"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/googleSignin"/>
     <Button
         android:id="@+id/googleSignin"
-        android:text="Sign in with google"
-        android:backgroundTint="@color/green"
+        android:text="Continue with google"
+        android:shadowColor="@color/black"
+        android:drawableLeft="@drawable/google_logo"
+        android:drawablePadding="8dp"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/white"
         android:layout_marginTop="65dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
