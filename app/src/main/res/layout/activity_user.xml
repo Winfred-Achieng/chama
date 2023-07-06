@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <FrameLayout
+        android:id="@+id/headerFragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"/>
+    <!-- Profile Picture -->
+    <ImageView
+        android:id="@+id/imageViewProfilePicture"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/default_profile_picture"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Button to Select Profile Picture -->
+    <Button
+        android:id="@+id/buttonSelectProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Profile Picture"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <!-- Button to Delete Profile Picture -->
+    <Button
+        android:id="@+id/buttonDeleteProfilePicture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Profile Picture"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <!-- First Name -->
+    <LinearLayout
+        android:id="@+id/firstNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+        <EditText
+            android:id="@+id/editTextFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="First Name"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+
+    </LinearLayout>
+
+    <!-- Last Name -->
+    <LinearLayout
+        android:id="@+id/lastNameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+        <EditText
+            android:id="@+id/editTextLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Last Name"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+
+    </LinearLayout>
+
+    <!-- Bio -->
+    <LinearLayout
+        android:id="@+id/bioLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="16dp"
+        android:focusable="true"
+        android:background="?android:attr/selectableItemBackground">
+
+        <EditText
+            android:id="@+id/editTextBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Bio"
+            android:inputType="textMultiLine"
+            android:gravity="top" />
+
+    </LinearLayout>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_gravity="center_horizontal" />
+
+</LinearLayout>

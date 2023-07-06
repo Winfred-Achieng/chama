@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
         val logout = binding.logout
 
         logout.setOnClickListener {
-                // Get the FirebaseAuth instance
-                val auth = FirebaseAuth.getInstance()
-                // Sign out the current user
-                auth.signOut()
+            // Get the FirebaseAuth instance
+            val auth = FirebaseAuth.getInstance()
+            // Sign out the current user
+            auth.signOut()
 
             Toast.makeText(this,"Logged Out!",Toast.LENGTH_SHORT).show()
             val intent = Intent(this, StartActivity::class.java)
