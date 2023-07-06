@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PinEntryActivity">
+
+
+    <TextView
+        android:id="@+id/pinTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Pin:"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="170dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <EditText
+        android:id="@+id/pinEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pinTv"
+        android:inputType="numberPassword"
+        android:maxLength="4"
+        android:ems="4"
+        android:textSize="20sp"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="50dp"
+        android:backgroundTint="@color/green"
+        app:layout_constraintTop_toBottomOf="@id/pinEditText"
+        app:layout_constraintStart_toStartOf="@id/pinEditText"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

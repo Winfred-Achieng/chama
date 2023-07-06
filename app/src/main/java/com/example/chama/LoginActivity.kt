@@ -40,7 +40,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
 
-private lateinit var binding: ActivityLoginBinding
+lateinit var binding: ActivityLoginBinding
 private lateinit var auth: FirebaseAuth
 val RC_SIGN_IN = 123
 private val REQ_ONE_TAP = 2  // Can be any integer unique to the Activity

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+     android:id="@+id/firstDropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
+        android:padding="16dp"
+        android:textSize="14sp"
+        />
+    <TextView
+        android:id="@+id/secondDropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstDropdown"
+        android:textColor="@color/black"
+        android:padding="16dp"
+        android:textSize="14sp"
+        />
+
+    <TextView
+        android:id="@+id/thirdDropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/secondDropdown"
+        android:textColor="@color/black"
+        android:padding="16dp"
+        android:textSize="14sp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

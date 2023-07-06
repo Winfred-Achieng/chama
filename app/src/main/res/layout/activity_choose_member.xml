@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".ChooseMemberActivity">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp"
+        android:text="Invite Members"
+        android:textColor="@color/green"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:padding="16dp"
+        android:textAlignment="center"
+        />
+
+    <LinearLayout
+        android:id="@+id/chooseMemberConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- EditText fields will be added here -->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_send_invites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SEND INVITES"
+        android:backgroundTint="@color/green"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="18dp"
+        />
+
+</LinearLayout>
+
