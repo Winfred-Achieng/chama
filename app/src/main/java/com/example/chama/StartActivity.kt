@@ -28,19 +28,19 @@ class StartActivity : AppCompatActivity() {
            // val token = deepLinkUri.getQueryParameter("token")
         //}
 
-            btnRegister.setOnClickListener {
+        btnRegister.setOnClickListener {
                 val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
 
             }
 
-            btnLogin.setOnClickListener {
+        btnLogin.setOnClickListener {
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)
 
             }
 
-            btnChama.setOnClickListener {
+        btnChama.setOnClickListener {
                 val intent = Intent(this, CreateNewChamaActivity::class.java)
                 startActivity(intent)
             }
