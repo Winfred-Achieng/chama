@@ -28,10 +28,7 @@ class UserProfileActivity : AppCompatActivity() {
         // profilePictureUri = Uri.parse("your_profile_picture_uri_here")
 
         // Create an instance of HeaderFragment and pass the profilePictureUri
-        val headerFragment = HeaderFragment(profilePictureUri)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.headerFragmentContainer, headerFragment)
-            .commit()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

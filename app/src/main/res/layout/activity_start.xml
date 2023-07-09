@@ -43,15 +43,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <Button
-        android:id="@+id/btn_chama"
-        android:text="Chama"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_login"
-        android:layout_marginTop="50dp"
-        android:backgroundTint="@color/lightGreen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -65,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult?) {
                     super.onAuthenticationSucceeded(result)
                     notifyUser("Authentication success!")
-                    startActivity(Intent(this@LoginActivity,UserProfile::class.java))
+                    startActivity(Intent(this@LoginActivity,HomeActivity::class.java))
                     finish()
                 }
             }

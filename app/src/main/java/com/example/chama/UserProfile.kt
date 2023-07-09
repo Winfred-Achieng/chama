@@ -10,9 +10,10 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+
 import com.example.chama.R // Replace with your correct R class import
+import com.google.firebase.storage.FirebaseStorage
 
 class UserProfile(private val activity: AppCompatActivity) {
 
@@ -34,6 +35,7 @@ class UserProfile(private val activity: AppCompatActivity) {
         // Initialize Firebase Firestore
         firestore = FirebaseFirestore.getInstance()
     }
+
 
     fun initializeViews() {
         imageViewProfilePicture = activity.findViewById(R.id.imageViewProfilePicture)
@@ -136,29 +138,29 @@ class UserProfile(private val activity: AppCompatActivity) {
                         // Image upload success
                         // Retrieve the download URL
                         imageRef.downloadUrl
-                            .addOnSuccessListener { uri ->
+                            .addOnSuccessListener { uri: Uri ->
                                 // Update the user document in Firestore with the profile picture URL
                                 val user = hashMapOf<String, Any>(
                                     "profilePicture" to uri.toString()
                                     // Add other fields if needed
                                 )
-
                                 firestore.collection("userProfiles").document(userId)
                                     .set(user)
                                     .addOnSuccessListener {
                                         // Profile picture URL saved to Firestore
                                     }
-                                    .addOnFailureListener { exception ->
+                                    .addOnFailureListener { exception: Exception ->
                                         // Error occurred while saving profile picture URL to Firestore
                                     }
                             }
-                            .addOnFailureListener { exception ->
+                            .addOnFailureListener { exception: Exception ->
                                 // Error occurred while retrieving the download URL
                             }
                     }
-                    .addOnFailureListener { exception ->
+                    .addOnFailureListener { exception: Exception ->
                         // Error occurred while uploading the image
                     }
+
             }
         }
     }
