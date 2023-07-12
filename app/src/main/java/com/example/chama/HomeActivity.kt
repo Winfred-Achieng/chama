@@ -20,18 +20,25 @@ class HomeActivity : AppCompatActivity() {
             .commit()
 
         // Set click listeners for the buttons
-        val btnCreateChama = findViewById<Button>(R.id.buttonCreateChama)
-        btnCreateChama.setOnClickListener {
+        val buttonCreateChama = findViewById<Button>(R.id.buttonCreateChama)
+        buttonCreateChama.setOnClickListener {
             // Handle create new chama button click
             // Start the create new chama activity
             startActivity(Intent(this, CreateNewChamaActivity::class.java))
         }
 
-        val btnListChamas = findViewById<Button>(R.id.buttonMyChamas)
-        btnListChamas.setOnClickListener {
+        val buttonMyChamas = findViewById<Button>(R.id.buttonMyChamas)
+        buttonMyChamas.setOnClickListener {
             // Handle my chamas button click
-            // Start the my chamas activity-list of chamas
+            // Start the my chamas activity
             startActivity(Intent(this, MyChamasActivity::class.java))
+        }
+
+        val buttonChats = findViewById<Button>(R.id.buttonChats)
+        buttonChats.setOnClickListener {
+            // Handle chats button click
+            // Start the chat activity
+            startActivity(Intent(this, ChatActivity::class.java))
         }
     }
 }

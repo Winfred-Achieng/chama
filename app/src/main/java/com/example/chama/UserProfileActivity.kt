@@ -28,11 +28,23 @@ class UserProfileActivity : AppCompatActivity() {
         // profilePictureUri = Uri.parse("your_profile_picture_uri_here")
 
         // Create an instance of HeaderFragment and pass the profilePictureUri
+        val headerFragment = HeaderFragment(profilePictureUri)
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.headerFragmentContainer, headerFragment)
+            .commit()
 
-    }
+        // Set click listener for the "Save" button
+        val buttonSave = findViewById<Button>(R.id.buttonSave)
+        buttonSave.setOnClickListener {
+            userProfile.saveUserProfile()
+        }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        userProfile.onActivityResult(requestCode, resultCode, data)
+        // Set click listener for the "Start Chat" button
+        val buttonStartChat = findViewById<Button>(R.id.buttonSave)
+        buttonStartChat.setOnClickListener {
+            val firstName = userProfile.getFirstName()
+            val lastName = userProfile.getLastName()
+            userProfile.startChatActivity(firstName, lastName)
+        }
     }
 }

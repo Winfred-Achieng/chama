@@ -10,10 +10,8 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.StorageReference
-
-import com.example.chama.R // Replace with your correct R class import
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class UserProfile(private val activity: AppCompatActivity) {
 
@@ -35,7 +33,6 @@ class UserProfile(private val activity: AppCompatActivity) {
         // Initialize Firebase Firestore
         firestore = FirebaseFirestore.getInstance()
     }
-
 
     fun initializeViews() {
         imageViewProfilePicture = activity.findViewById(R.id.imageViewProfilePicture)
@@ -67,7 +64,7 @@ class UserProfile(private val activity: AppCompatActivity) {
         activity.startActivityForResult(intent, PICK_IMAGE_REQUEST)
     }
 
-    private fun saveUserProfile() {
+    fun saveUserProfile() {
         val firstName = editTextFirstName.text.toString().trim()
         val lastName = editTextLastName.text.toString().trim()
         val bio = editTextBio.text.toString().trim()
@@ -89,10 +86,8 @@ class UserProfile(private val activity: AppCompatActivity) {
                     // Successful data save
                     // Show a success message or navigate to another screen
 
-                    // Start HomeActivity
-                    val intent = Intent(activity, HomeActivity::class.java)
-                    activity.startActivity(intent)
-                    activity.finish()
+                    // Start ChatActivity
+                    startChatActivity(firstName, lastName)
                 }
                 .addOnFailureListener {
                     // Error occurred while saving data
@@ -119,8 +114,6 @@ class UserProfile(private val activity: AppCompatActivity) {
         }
     }
 
-    // ...
-
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
             selectedImageUri = data.data
@@ -138,30 +131,45 @@ class UserProfile(private val activity: AppCompatActivity) {
                         // Image upload success
                         // Retrieve the download URL
                         imageRef.downloadUrl
-                            .addOnSuccessListener { uri: Uri ->
+                            .addOnSuccessListener { uri ->
                                 // Update the user document in Firestore with the profile picture URL
                                 val user = hashMapOf<String, Any>(
                                     "profilePicture" to uri.toString()
                                     // Add other fields if needed
                                 )
+
                                 firestore.collection("userProfiles").document(userId)
                                     .set(user)
                                     .addOnSuccessListener {
                                         // Profile picture URL saved to Firestore
                                     }
-                                    .addOnFailureListener { exception: Exception ->
+                                    .addOnFailureListener { exception ->
                                         // Error occurred while saving profile picture URL to Firestore
                                     }
                             }
-                            .addOnFailureListener { exception: Exception ->
+                            .addOnFailureListener { exception ->
                                 // Error occurred while retrieving the download URL
                             }
                     }
-                    .addOnFailureListener { exception: Exception ->
+                    .addOnFailureListener { exception ->
                         // Error occurred while uploading the image
                     }
-
             }
         }
+    }
+
+    fun startChatActivity(firstName: String, lastName: String) {
+        val intent = Intent(activity, ChatActivity::class.java)
+        intent.putExtra("firstName", firstName)
+        intent.putExtra("lastName", lastName)
+        activity.startActivity(intent)
+    }
+
+    fun getFirstName(): String {
+        return editTextFirstName.text.toString().trim()
+    }
+
+    fun getLastName(): String {
+        return editTextLastName.text.toString().trim()
     }
 }

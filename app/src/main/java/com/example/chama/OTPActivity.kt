@@ -10,6 +10,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import java.util.concurrent.TimeUnit
+import android.content.Intent
+import com.google.firebase.firestore.FirebaseFirestore
 
 class OTPActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
@@ -77,7 +79,14 @@ class OTPActivity : AppCompatActivity() {
                 override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
                     this@OTPActivity.verificationId = verificationId
                     showToast("OTP sent successfully")
+
+                    // Start OTPVerificationActivity and pass the verification ID
+                    val intent = Intent(this@OTPActivity, OTPVerificationActivity::class.java)
+                    intent.putExtra("verificationId", verificationId)
+                    startActivity(intent)
                 }
+
+
             })
     }
 
@@ -92,12 +101,31 @@ class OTPActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = task.result?.user
                     showToast("Verification successful")
-                    // Proceed with the desired actions, such as navigating to the next screen
+
+                    val phoneNumber = etPhoneNumber.text.toString().trim()
+                    val otp = etOtp.text.toString().trim()
+
+                    // Save the OTP and phone number to Firestore
+                    val userDocument = FirebaseFirestore.getInstance().collection("users").document(auth.currentUser?.uid ?: "")
+                    val data = hashMapOf(
+                        "phoneNumber" to phoneNumber,
+                        "otp" to otp
+                    )
+
+                    userDocument.set(data)
+                        .addOnSuccessListener {
+                            showToast("OTP and phone number saved to Firestore")
+                            // Proceed with the desired actions, such as navigating to the next screen
+                        }
+                        .addOnFailureListener { exception ->
+                            showToast("Error saving OTP and phone number to Firestore: ${exception.message}")
+                        }
                 } else {
                     showToast("Verification failed: ${task.exception?.message}")
                 }
             }
     }
+
 
     private fun showToast(message: String) {
         Toast.makeText(this@OTPActivity, message, Toast.LENGTH_SHORT).show()
