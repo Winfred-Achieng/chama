@@ -52,10 +52,16 @@ class CreateNewChamaActivity : AppCompatActivity() {
             // Adding the data to Cloud Firestore
 
             db.collection("chamas")
-                .document(chamaName)
-                .set(data)
-                .addOnSuccessListener {
+                .add(data)
+                .addOnSuccessListener { documentReference ->
+                    val chamaDocumentId = documentReference.id
                     Toast.makeText(this, "New chama created successfully", Toast.LENGTH_SHORT).show()
+
+                    // Pass the Chama document ID to the GoalsFragment
+                    val goalsFragment = GoalsFragment()
+                    val bundle = Bundle()
+                    bundle.putString("chamaId", chamaDocumentId)
+                    goalsFragment.arguments = bundle
 
                     // Pass the chamaName or any other data as needed
                     val intent = Intent(this, ChooseMemberActivity::class.java)

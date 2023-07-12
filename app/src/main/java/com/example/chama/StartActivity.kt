@@ -15,9 +15,9 @@ class StartActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
 
-        val intent = Intent(this, UserProfile::class.java)
-        startActivity(intent)
-        finish()
+        //val intent = Intent(this, UserProfile::class.java)
+        //startActivity(intent)
+        //finish()
 
         btnRegister = findViewById(R.id.btn_register)
         btnLogin = findViewById(R.id.btn_login)
@@ -29,7 +29,7 @@ class StartActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            val intent = Intent(this,UserProfileActivity::class.java)
+            val intent = Intent(this,OTPActivity::class.java)
             startActivity(intent)
 
         }

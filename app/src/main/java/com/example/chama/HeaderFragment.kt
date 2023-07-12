@@ -38,8 +38,6 @@ class HeaderFragment(private val profilePictureUri: Uri?) : Fragment() {
                 .into(userProfilePicture)
         }
 
-       // binding.headerTitle.text = "My App"
-
         settingsIcon.setOnClickListener {
             // Handle settings icon click action here
         }
@@ -58,5 +56,10 @@ class HeaderFragment(private val profilePictureUri: Uri?) : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun setChamaName(chamaName: String?) {
+        // Update the UI with the chamaName
+        binding.headerTitle.text = chamaName
     }
 }

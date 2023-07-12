@@ -15,11 +15,17 @@ class ChamaCreatedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chama_created)
 
+        // Retrieve the chamaName from the intent extras
+        val chamaName = intent.getStringExtra("chamaName")
+
+        // Get a reference to the HeaderFragment
         val profilePictureUri = Uri.parse("your_profile_picture_uri_here")
         val headerFragment = HeaderFragment(profilePictureUri)
         supportFragmentManager.beginTransaction()
             .replace(R.id.headerContainer, headerFragment)
             .commit()
+        // Pass the chamaName to the HeaderFragment and update the UI
+        //headerFragment.setChamaName(chamaName)
 
         viewPager = findViewById(R.id.viewPager)
         val adapter = ViewPagerAdapter(supportFragmentManager)
@@ -35,7 +41,5 @@ class ChamaCreatedActivity : AppCompatActivity() {
         // Set up TabLayout
         tabLayout = findViewById(R.id.tabLayout)
         tabLayout.setupWithViewPager(viewPager)
-
-
     }
 }
