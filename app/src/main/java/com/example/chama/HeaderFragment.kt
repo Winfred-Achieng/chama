@@ -1,5 +1,6 @@
 package com.example.chama
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,6 +48,8 @@ class HeaderFragment(private val profilePictureUri: Uri?) : Fragment() {
 
         settingsIcon.setOnClickListener {
             // Handle settings icon click action here
+            val intent = Intent(requireContext(), SettingsActivity::class.java)
+            startActivity(intent)
         }
 
         userProfilePicture.setOnClickListener {
@@ -69,6 +72,7 @@ class HeaderFragment(private val profilePictureUri: Uri?) : Fragment() {
         // Update the UI with the chamaName
         binding.headerTitle.text = chamaName
     }
+
     companion object {
         fun newInstance(chamaName: String?, profilePictureUri: Uri?): HeaderFragment {
             val fragment = HeaderFragment(profilePictureUri)
@@ -79,7 +83,4 @@ class HeaderFragment(private val profilePictureUri: Uri?) : Fragment() {
             return fragment
         }
     }
-
 }
-
-
