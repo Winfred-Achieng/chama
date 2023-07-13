@@ -15,17 +15,26 @@ class ChamaCreatedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chama_created)
 
-        // Retrieve the chamaName from the intent extras
-        val chamaName = intent.getStringExtra("chamaName")
 
-        // Get a reference to the HeaderFragment
-        val profilePictureUri = Uri.parse("your_profile_picture_uri_here")
-        val headerFragment = HeaderFragment(profilePictureUri)
+        // Retrieve the chamaName and other details from the intent extras
+        val chamaName = intent.getStringExtra("chamaName")
+        val description = intent.getStringExtra("description")
+        val goals = intent.getStringExtra("goals")
+        val targetPerMonth = intent.getStringExtra("targetPerMonth")
+        val numberOfMembers = intent.getStringExtra("numberOfMembers")
+
+// Retrieve the profilePictureUri from the intent extras
+        val profilePictureUri = intent.getParcelableExtra<Uri>("profilePictureUri")
+
+// Create an instance of HeaderFragment and pass the chamaName and profilePictureUri as arguments
+        val headerFragment = HeaderFragment.newInstance(chamaName, profilePictureUri)
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.headerContainer, headerFragment)
             .commit()
-        // Pass the chamaName to the HeaderFragment and update the UI
-        //headerFragment.setChamaName(chamaName)
+
+
+
 
         viewPager = findViewById(R.id.viewPager)
         val adapter = ViewPagerAdapter(supportFragmentManager)

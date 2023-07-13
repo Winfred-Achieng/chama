@@ -1,6 +1,6 @@
 package com.example.chama
 
-import android.app.blob.BlobStoreManager
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -11,7 +11,6 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.chama.R
 import com.example.chama.databinding.ActivityChooseMemberBinding
 import com.google.android.gms.fido.common.Transport
 import kotlinx.coroutines.*
@@ -47,6 +46,7 @@ class ChooseMemberActivity : AppCompatActivity() {
         sendInvitesBtn.setOnClickListener {
             val emailAddresses = getEmailAddressesFromEditTexts(editTextIds)
             sendEmails(emailAddresses)
+
         }
     }
 
@@ -139,7 +139,22 @@ class ChooseMemberActivity : AppCompatActivity() {
                        // println("Email sent successfully to: $emailAddress")
                         runOnUiThread {
                             Toast.makeText(applicationContext, "Invitation sent successfully to: $emailAddress", Toast.LENGTH_SHORT).show()
+
+                            val chamaName = intent.getStringExtra("chamaName")
+                            val description = intent.getStringExtra("description")
+                            val goals = intent.getStringExtra("goals")
+                            val targetPerMonth = intent.getStringExtra("targetPerMonth")
+                            val numberOfMembers = intent.getStringExtra("numberOfMembers")
+                            val intent = Intent(this@ChooseMemberActivity, ChamaCreatedActivity::class.java)
+                            intent.putExtra("chamaName", chamaName)
+                            intent.putExtra("description", description)
+                            intent.putExtra("goals", goals)
+                            intent.putExtra("targetPerMonth", targetPerMonth)
+                            intent.putExtra("numberOfMembers", numberOfMembers)
+                            startActivity(intent)
+                            finish() // Optional: Finish the current activity if you don't want to navigate back to it
                         }
+
 
                     } catch (e: MessagingException) {
                         //println("Error sending email to: $emailAddress. Error: ${e.message}")

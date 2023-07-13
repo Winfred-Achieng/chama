@@ -33,6 +33,9 @@
         <activity android:name=".OTPActivity"
             android:exported="false" />
 
+        <activity android:name=".TransactionActivity"
+            android:exported="false" />
+
         <activity android:name=".OTPVerificationActivity"
             android:exported="false" />
 

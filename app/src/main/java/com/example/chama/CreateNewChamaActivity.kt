@@ -66,6 +66,9 @@ class CreateNewChamaActivity : AppCompatActivity() {
                     // Pass the chamaName or any other data as needed
                     val intent = Intent(this, ChooseMemberActivity::class.java)
                     intent.putExtra("chamaName", chamaName)
+                    intent.putExtra("description", description)
+                    intent.putExtra("goals", goals)
+                    intent.putExtra("targetPerMonth", targetPerMonth)
                     intent.putExtra("numberOfMembers", numberOfMembers)
                     startActivity(intent)
                     finish()

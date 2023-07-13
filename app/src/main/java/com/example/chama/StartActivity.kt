@@ -29,7 +29,7 @@ class StartActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            val intent = Intent(this,OTPActivity::class.java)
+            val intent = Intent(this,CreateNewChamaActivity::class.java)
             startActivity(intent)
 
         }

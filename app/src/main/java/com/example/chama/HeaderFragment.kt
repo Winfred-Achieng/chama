@@ -29,6 +29,13 @@ class HeaderFragment(private val profilePictureUri: Uri?) : Fragment() {
         userProfilePicture = binding.userProfilePicture
         notificationsIcon = binding.notificationsIcon
 
+        // Retrieve the chamaName and profilePictureUri from the arguments
+        val chamaName = arguments?.getString("chamaName")
+        val profilePictureUri = arguments?.getParcelable<Uri>("profilePictureUri")
+
+        // Update the UI with the chamaName
+        setChamaName(chamaName)
+
         // Set profile picture if URI is available
         profilePictureUri?.let { uri ->
             Glide.with(requireContext())
@@ -62,4 +69,17 @@ class HeaderFragment(private val profilePictureUri: Uri?) : Fragment() {
         // Update the UI with the chamaName
         binding.headerTitle.text = chamaName
     }
+    companion object {
+        fun newInstance(chamaName: String?, profilePictureUri: Uri?): HeaderFragment {
+            val fragment = HeaderFragment(profilePictureUri)
+            val args = Bundle().apply {
+                putString("chamaName", chamaName)
+            }
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
 }
+
+
