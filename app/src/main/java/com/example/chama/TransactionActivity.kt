@@ -23,7 +23,7 @@ class TransactionActivity : AppCompatActivity() {
             val intent = Intent(this, HistoryTransactionActivity::class.java)
             startActivity(intent)
         }
-
+//add
         val backButton: Button = findViewById(R.id.buttonBack)
         backButton.setOnClickListener {
             finish() // Close the current activity and go back to the previous activity (ContributeActivity)
