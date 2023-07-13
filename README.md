@@ -15,6 +15,75 @@ To install this application, Kindly follow the steps listed below:
 
 ## Usage
 
+Kindly follow the steps below to integrate the Chama API into your Chama app:
+
+1. **Create a Chama Client**: To communicate with the Chama API, you need to create a client instance. Instantiate the client by providing the necessary credentials and environment settings. Here's an example of how to create a Chama client:
+
+    ```kotlin
+    val client = ChamaClient(
+        apiKey = "YOUR_API_KEY",
+        apiSecret = "YOUR_API_SECRET",
+        environment = Environment.Sandbox
+    )
+    ```
+
+2. **Connect to the Chama API**: Before making any API calls, you should ensure that your client is successfully connected to the Chama API. You can use the `isConnected` method to check the connection status. Here's an example:
+
+    ```kotlin
+    if (client.isConnected()) {
+        // Proceed with API requests
+    } else {
+        // Handle connection error
+    }
+    ```
+
+3. **Make Chama API Requests**: Once your client is connected, you can start making API requests to interact with the Chama API endpoints. The Chama client provides methods for different API operations. Here are a few examples:
+
+    - Creating a new Chama:
+
+        ```kotlin
+        val chamaName = "My Chama"
+        val response = client.createChama(chamaName)
+        if (response.isSuccess()) {
+            val chamaId = response.getChamaId()
+            // Chama created successfully, proceed with further actions
+        } else {
+            val errorMessage = response.getErrorMessage()
+            // Handle creation error
+        }
+        ```
+
+    - Getting Chama details:
+
+        ```kotlin
+        val chamaId = "CHAMA_ID"
+        val response = client.getChama(chamaId)
+        if (response.isSuccess()) {
+            val chama = response.getChama()
+            // Process and display Chama details
+        } else {
+            val errorMessage = response.getErrorMessage()
+            // Handle error retrieving Chama details
+        }
+        ```
+
+    - Making a contribution to a Chama:
+
+        ```kotlin
+        val chamaId = "CHAMA_ID"
+        val amount = 1000
+        val response = client.makeContribution(chamaId, amount)
+        if (response.isSuccess()) {
+            // Contribution made successfully
+        } else {
+            val errorMessage = response.getErrorMessage()
+            // Handle contribution error
+        }
+        ```
+
+4. **Handle API Responses**: API requests can result in successful responses with data or error responses. You can use the `isSuccess` method to check if the response is successful and retrieve the relevant data using provided methods like `getChamaId`, `getChama`, etc. For error responses, you can use the `getErrorMessage` method to obtain the error message and handle it accordingly.
+
+
 
 ## Contributions
 
