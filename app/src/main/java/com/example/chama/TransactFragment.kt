@@ -15,7 +15,7 @@ class TransactFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_transact, container, false)
     }
-
+//add
     // Add any necessary fragment-specific code here
 
 }

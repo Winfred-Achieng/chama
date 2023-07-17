@@ -59,8 +59,9 @@
         <activity
             android:name=".ChamaCreatedActivity"
             android:exported="false" />
+
         <activity
-            android:name=".HomeActivity"
+            android:name=".SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".ChooseMemberActivity"
@@ -71,6 +72,9 @@
 
         <activity
             android:name=".fingerprintActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyChamasActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -88,7 +92,7 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".StartActivity"
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

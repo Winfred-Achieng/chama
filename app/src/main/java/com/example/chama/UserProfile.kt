@@ -46,7 +46,7 @@ class UserProfile(private val activity: AppCompatActivity) {
             openGallery()
         }
     }
-
+//add
     fun setSaveClickListener(buttonSave: Button) {
         buttonSave.setOnClickListener {
             saveUserProfile()

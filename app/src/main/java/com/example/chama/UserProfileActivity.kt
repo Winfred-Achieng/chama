@@ -38,7 +38,7 @@ class UserProfileActivity : AppCompatActivity() {
         buttonSave.setOnClickListener {
             userProfile.saveUserProfile()
         }
-
+//add
         // Set click listener for the "Start Chat" button
         val buttonStartChat = findViewById<Button>(R.id.buttonSave)
         buttonStartChat.setOnClickListener {
