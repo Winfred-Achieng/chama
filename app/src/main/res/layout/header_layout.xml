@@ -1,0 +1,51 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@color/green"
+    android:padding="15dp">
+
+    <ImageView
+        android:id="@+id/settingsIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_marginTop="6dp"
+        android:src="@drawable/bs_settings"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/headerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Chama Hub"
+        android:layout_marginStart="67dp"
+        android:layout_marginEnd="30dp"
+
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1.2" />
+
+    <ImageView
+        android:id="@+id/notificationsIcon"
+        android:layout_marginTop="6dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_notifications"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/userProfilePicture"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_profile"
+         />
+
+</LinearLayout>

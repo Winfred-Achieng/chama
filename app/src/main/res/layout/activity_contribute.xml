@@ -3,12 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="25dp">
+
+    <TextView
+        android:id="@+id/newChamaTV"
+        android:text="Contribute"
+        android:textColor="@color/green"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="22sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <EditText
-        android:id="@+id/editTextPhoneNumber"
+        android:id="@+id/etPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
         android:layout_alignParentTop="true"
         android:hint="Phone Number"
         android:inputType="phone" />
@@ -17,13 +32,13 @@
         android:id="@+id/textViewNumberFormat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextPhoneNumber"
+        android:layout_below="@id/etPhone"
         android:layout_marginTop="8dp"
         android:text="Please use the format: +2547*********"
         android:textColor="#263726" />
 
     <EditText
-        android:id="@+id/editTextContributionAmount"
+        android:id="@+id/etAmount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textViewNumberFormat"
@@ -32,19 +47,15 @@
         android:inputType="numberDecimal" />
 
     <Button
-        android:id="@+id/buttonPay"
-        android:layout_width="match_parent"
+        android:id="@+id/btnPay"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editTextContributionAmount"
-        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green"
+        android:layout_below="@id/etAmount"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="20dp"
         android:text="Pay" />
 
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonPay"
-        android:layout_marginTop="16dp"
-        android:text="Back" />
+
 
 </RelativeLayout>

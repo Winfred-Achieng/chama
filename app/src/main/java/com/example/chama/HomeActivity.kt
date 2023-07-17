@@ -8,22 +8,40 @@ import androidx.appcompat.app.AppCompatActivity
 
 class HomeActivity : AppCompatActivity() {
 
+    private lateinit var firstName: String
+    private lateinit var lastName: String
+    private lateinit var bio: String
+    private lateinit var userProfilePicture: Uri
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        // Retrieve data from intent
+        firstName = intent.getStringExtra("firstName") ?: ""
+        lastName = intent.getStringExtra("lastName") ?: ""
+
+        val userProfilePictureString = intent.getStringExtra("userProfilePicture")
+        userProfilePicture = if (userProfilePictureString != null) Uri.parse(userProfilePictureString) else Uri.EMPTY
+
+
         // Create an instance of HeaderFragment and pass the profilePictureUri
-        val profilePictureUri = Uri.parse("your_profile_picture_uri_here")
-        val headerFragment = HeaderFragment(profilePictureUri)
+        val homeFragment = HomeFragment.newInstance(firstName, lastName, userProfilePicture)
         supportFragmentManager.beginTransaction()
-            .replace(R.id.headerContainer, headerFragment)
+            .replace(R.id.headerContainer, homeFragment)
             .commit()
+
+
 
         // Set click listeners for the buttons
         val buttonCreateChama = findViewById<Button>(R.id.buttonCreateChama)
         buttonCreateChama.setOnClickListener {
             // Handle create new chama button click
             // Start the create new chama activity
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("userProfilePicture", userProfilePicture?.toString())
             startActivity(Intent(this, CreateNewChamaActivity::class.java))
         }
 
@@ -32,13 +50,6 @@ class HomeActivity : AppCompatActivity() {
             // Handle my chamas button click
             // Start the my chamas activity
             startActivity(Intent(this, MyChamasActivity::class.java))
-        }
-
-        val buttonChats = findViewById<Button>(R.id.buttonChats)
-        buttonChats.setOnClickListener {
-            // Handle chats button click
-            // Start the chat activity
-            startActivity(Intent(this, ChatActivity::class.java))
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.chama
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
@@ -10,13 +11,24 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class CreateNewChamaActivity : AppCompatActivity() {
 
+    private lateinit var firstName: String
+    private lateinit var lastName: String
     private lateinit var binding: ActivityCreateNewChamaBinding
     private val db = FirebaseFirestore.getInstance()
+    private var profilePictureUri: Uri? = Uri.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateNewChamaBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        firstName = intent.getStringExtra("firstName") ?: ""
+        lastName = intent.getStringExtra("lastName") ?: ""
+
+        val userProfilePictureString = intent.getStringExtra("userProfilePicture")
+        profilePictureUri = if (userProfilePictureString != null) Uri.parse(userProfilePictureString) else Uri.EMPTY
+
+
 
         binding.inviteBtn.setOnClickListener {
             val chamaName = binding.nameEditText.text.toString().trim()
@@ -54,22 +66,23 @@ class CreateNewChamaActivity : AppCompatActivity() {
             db.collection("chamas")
                 .add(data)
                 .addOnSuccessListener { documentReference ->
-                    val chamaDocumentId = documentReference.id
+                    val chamaId = documentReference.id
                     Toast.makeText(this, "New chama created successfully", Toast.LENGTH_SHORT).show()
 
-                    // Pass the Chama document ID to the GoalsFragment
-                    val goalsFragment = GoalsFragment()
-                    val bundle = Bundle()
-                    bundle.putString("chamaId", chamaDocumentId)
-                    goalsFragment.arguments = bundle
+
 
                     // Pass the chamaName or any other data as needed
                     val intent = Intent(this, ChooseMemberActivity::class.java)
+                    intent.putExtra("chamaId", chamaId)
                     intent.putExtra("chamaName", chamaName)
                     intent.putExtra("description", description)
                     intent.putExtra("goals", goals)
                     intent.putExtra("targetPerMonth", targetPerMonth)
                     intent.putExtra("numberOfMembers", numberOfMembers)
+                    intent.putExtra("firstName", firstName)
+                    intent.putExtra("lastName", lastName)
+                    intent.putExtra("userProfilePicture", profilePictureUri?.toString())
+
                     startActivity(intent)
                     finish()
                 }

@@ -16,4 +16,10 @@
     <color name="blue">#2751B8</color>
     <color name="lightGreen">#A3B5A4</color>
     <color name="stroke_color">#808080</color>
+
+    <color name="editModeBackground">#8AAA8B</color>
+    <color name="normalModeBackground">#FFFFFF</color>
+
+    <color name="editTextLineColor">#FF000000</color>
+
 </resources>

@@ -26,8 +26,8 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <TextView
-                android:id="@+id/chamaNameTV"
+            <EditText
+                android:id="@+id/chamaNameET"
                 android:text="Chama Name:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,29 +35,29 @@
                 android:textStyle="bold"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/descriptionTV"
+            <EditText
+                android:id="@+id/descriptionET"
                 android:text="Description:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
 
-            <TextView
-                android:id="@+id/goalsTV"
+            <EditText
+                android:id="@+id/goalsET"
                 android:text="Goals:"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="3dp"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
-            <TextView
-                android:id="@+id/targetPerMonthTV"
+            <EditText
+                android:id="@+id/targetPerMonthET"
                 android:text="Target Per Month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="3dp"
                 android:textSize="14sp"
                 android:textColor="@color/black" />
 

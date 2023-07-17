@@ -26,35 +26,35 @@ class HistoryTransactionActivity : AppCompatActivity() {
         paymentsRef = database.getReference("payments")
 
         // Read the payment details from the database
-        paymentsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val paymentDetails = StringBuilder()
+       // paymentsRef.addValueEventListener(object : ValueEventListener {
+         //   override fun onDataChange(dataSnapshot: DataSnapshot) {
+            //    val paymentDetails = StringBuilder()
 
                 // Iterate over each child node (payment)
-                for (childSnapshot in dataSnapshot.children) {
+                //for (childSnapshot in dataSnapshot.children) {
                     // Parse the payment details
-                    val payment = childSnapshot.getValue(Payment::class.java)
+                   // val payment = childSnapshot.getValue(Payment::class.java)
 
                     // Append the amount and timestamp to the paymentDetails string
-                    payment?.let {
-                        val amount = it.amount
-                        val timestamp = it.timestamp
+                    //payment?.let {
+                       // val amount = it.amount
+                       // val timestamp = it.timestamp
 
-                        val paymentInfo = "Amount: $amount, Timestamp: $timestamp\n"
-                        paymentDetails.append(paymentInfo)
+                        //val paymentInfo = "Amount: $amount, Timestamp: $timestamp\n"
+                        //paymentDetails.append(paymentInfo)
                     }
-                }
+                //}
 
                 // Set the payment details text in the TextView
-                paymentDetailsTextView.text = paymentDetails.toString()
-            }
+                //paymentDetailsTextView.text = paymentDetails.toString()
+           // }
 
-            override fun onCancelled(databaseError: DatabaseError) {
+            //override fun onCancelled(databaseError: DatabaseError) {
                 // Failed to read payment details
                 // Handle the error
-            }
-        })
-    }
+            //}
+       // })
+    //}
 
     // ...
 }

@@ -26,6 +26,7 @@ import javax.mail.PasswordAuthentication
 
 class ChooseMemberActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChooseMemberBinding
+    private lateinit var profilePictureUri: Uri
 
     private val properties = Properties().apply {
         put("mail.smtp.host", "smtp.gmail.com") // Replace with the actual SMTP server hostname
@@ -140,17 +141,29 @@ class ChooseMemberActivity : AppCompatActivity() {
                         runOnUiThread {
                             Toast.makeText(applicationContext, "Invitation sent successfully to: $emailAddress", Toast.LENGTH_SHORT).show()
 
+                            val chamaId = intent.getStringExtra("chamaId")
                             val chamaName = intent.getStringExtra("chamaName")
                             val description = intent.getStringExtra("description")
                             val goals = intent.getStringExtra("goals")
                             val targetPerMonth = intent.getStringExtra("targetPerMonth")
                             val numberOfMembers = intent.getStringExtra("numberOfMembers")
+                            val firstName = intent.getStringExtra("firstName") ?: ""
+                            val lastName = intent.getStringExtra("lastName") ?: ""
+
+                            val userProfilePictureString = intent.getStringExtra("userProfilePicture")
+                            profilePictureUri = Uri.parse(userProfilePictureString)
+
                             val intent = Intent(this@ChooseMemberActivity, ChamaCreatedActivity::class.java)
+                            intent.putExtra("chamaId", chamaId)
                             intent.putExtra("chamaName", chamaName)
                             intent.putExtra("description", description)
                             intent.putExtra("goals", goals)
                             intent.putExtra("targetPerMonth", targetPerMonth)
                             intent.putExtra("numberOfMembers", numberOfMembers)
+                            intent.putExtra("firstName", firstName)
+                            intent.putExtra("lastName", lastName)
+                            intent.putExtra("userProfilePicture", profilePictureUri?.toString())
+
                             startActivity(intent)
                             finish() // Optional: Finish the current activity if you don't want to navigate back to it
                         }

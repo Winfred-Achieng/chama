@@ -1,6 +1,5 @@
 package com.example.chama
 
-
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -105,7 +104,7 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Account registration successful, activate account
                     activateAccount()
-                    val intent = Intent(this, LoginActivity::class.java)
+                    val intent = Intent(this, UserProfileActivity::class.java)
                     startActivity(intent)
                     finish()
                 } else {

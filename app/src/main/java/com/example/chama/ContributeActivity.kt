@@ -1,87 +1,133 @@
 package com.example.chama
 
-import android.content.Intent
-import android.net.Uri
+import androidx.annotation.NonNull
+import androidx.appcompat.app.AppCompatActivity
+import android.app.ProgressDialog
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.example.chama.Model.AccessToken
+import com.example.chama.Model.STKPush
+import butterknife.BindView
+import butterknife.ButterKnife
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
 
-class ContributeActivity : AppCompatActivity() {
+import com.example.chama.R
+import com.example.chama.Services.DarajaApiClient
+import com.example.chama.Constants.BUSINESS_SHORT_CODE
+import com.example.chama.Constants.CALLBACKURL
+import com.example.chama.Constants.PARTYB
+import com.example.chama.Constants.PASSKEY
+import com.example.chama.Constants.TRANSACTION_TYPE
+import com.example.chama.Utils.Utils
 
-    private lateinit var phoneNumberEditText: EditText
-    private lateinit var amountEditText: EditText
-    private lateinit var paymentsRef: DatabaseReference
+
+class ContributeActivity : AppCompatActivity(), View.OnClickListener {
+
+    private lateinit var mApiClient: DarajaApiClient
+    private lateinit var mProgressDialog: ProgressDialog
+
+
+
+    lateinit var mAmount: EditText
+
+    lateinit var mPhone: EditText
+
+    lateinit var mPay: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contribute)
+        ButterKnife.bind(this)
 
-        phoneNumberEditText = findViewById(R.id.editTextPhoneNumber)
-        amountEditText = findViewById(R.id.editTextContributionAmount)
+        mProgressDialog = ProgressDialog(this)
+        mApiClient = DarajaApiClient()
+        mApiClient.setIsDebug(true) //Set True to enable logging, false to disable.
 
-        val payButton: Button = findViewById(R.id.buttonPay)
-        payButton.setOnClickListener {
-            val phoneNumber = phoneNumberEditText.text.toString().trim()
-            val amount = amountEditText.text.toString().trim()
+        mPay.setOnClickListener(this)
 
-            if (phoneNumber.isEmpty()) {
-                Toast.makeText(this, "Please input phone number", Toast.LENGTH_SHORT).show()
-            } else if (phoneNumber.length != 13) {
-                Toast.makeText(this, "Invalid phone number.", Toast.LENGTH_SHORT).show()
-            } else if (amount.isEmpty()) {
-                Toast.makeText(this, "Please input amount", Toast.LENGTH_SHORT).show()
-            } else {
-                // Launch M-Pesa application for payment processing
-                val mpesaUri = Uri.parse("mpesa://pay?phone=$phoneNumber&amount=$amount")
-                val intent = Intent(Intent.ACTION_VIEW, mpesaUri)
-                if (intent.resolveActivity(packageManager) != null) {
-                    startActivity(intent)
-                    savePaymentDetails(phoneNumber, amount.toDouble())
-                } else {
-                    // M-Pesa application not found, display an error message or alternative payment option
-                    Toast.makeText(this, "M-Pesa application not installed.", Toast.LENGTH_SHORT).show()
+        getAccessToken()
+    }
+
+    fun getAccessToken() {
+        mApiClient.setGetAccessToken(true)
+        mApiClient.mpesaService().getAccessToken()?.enqueue(object : Callback<AccessToken?> {
+            override fun onResponse(call: Call<AccessToken?>, response: Response<AccessToken?>) {
+                if (response.isSuccessful) {
+                    mApiClient.setAuthToken(response.body()?.accessToken)
                 }
             }
-        }
+
+            override fun onFailure(call: Call<AccessToken?>, t: Throwable) {
+                Timber.e(t)
+            }
+        })
+    }
 
 
-        // Get a reference to the "payments" node in the Firebase Realtime Database
-        paymentsRef = FirebaseDatabase.getInstance().getReference("payments")
 
-        val backButton: Button = findViewById(R.id.buttonBack)
-        backButton.setOnClickListener {
-            finish() // Finish the current activity and go back to the previous activity (TransactionActivity)
+    override fun onClick(view: View) {
+        if (view === mPay) {
+            val phoneNumber = mPhone.text.toString()
+            val amount = mAmount.text.toString()
+            performSTKPush(phoneNumber, amount)
         }
     }
 
-    private fun savePaymentDetails(phoneNumber: String, amount: Double) {
-        // Create a new payment object
-        val payment = Payment(phoneNumber, amount, System.currentTimeMillis())
+    fun performSTKPush(phoneNumber: String, amount: String) {
+        mProgressDialog.setMessage("Processing your request")
+        mProgressDialog.setTitle("Please Wait...")
+        mProgressDialog.isIndeterminate = true
+        mProgressDialog.show()
+        val timestamp = Utils.fetchTimestamp()
+        val stkPush = STKPush(
+            BUSINESS_SHORT_CODE,
+            Utils.getPassword(BUSINESS_SHORT_CODE, PASSKEY, timestamp),
+            timestamp,
+            TRANSACTION_TYPE,
+            amount,
+            Utils.sanitizePhoneNumber(phoneNumber),
+            PARTYB,
+            Utils.sanitizePhoneNumber(phoneNumber),
+            CALLBACKURL,
+            "MPESA Android Test", //Account reference
+            "Testing"  //Transaction description
+        )
 
-        // Generate a unique key for the payment
-        val paymentKey = paymentsRef.push().key
+        mApiClient.setGetAccessToken(false)
 
-        // Save the payment details under the generated key
-        paymentKey?.let {
-            paymentsRef.child(it).setValue(payment)
-                .addOnSuccessListener {
-                    // Payment details saved successfully
-                    Toast.makeText(this, "Payment details saved", Toast.LENGTH_SHORT).show()
+        //Sending the data to the Mpesa API, remember to remove the logging when in production.
+        mApiClient.mpesaService().sendPush(stkPush)?.enqueue(object : Callback<STKPush?> {
+            override fun onResponse(call: Call<STKPush?>, response: Response<STKPush?>) {
+                mProgressDialog.dismiss()
+                try {
+                    if (response.isSuccessful) {
+                        val stkPushResponse = response.body()
+                        // Handle successful response
+                        Timber.d("post submitted to API. $stkPushResponse")
+                    } else {
+                        val errorBody = response.errorBody()?.string()
+                        // Handle error response
+                        Timber.e("Response $errorBody")
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
-                .addOnFailureListener {
-                    // Error occurred while saving payment details
-                    Toast.makeText(this, "Failed to save payment details", Toast.LENGTH_SHORT).show()
-                }
-        }
+            }
+
+            override fun onFailure(call: Call<STKPush?>, t: Throwable) {
+                mProgressDialog.dismiss()
+                Timber.e(t)
+            }
+        })
+    }
+
+
+    override fun onPointerCaptureChanged(hasCapture: Boolean) {
+        // Implement this method if needed
     }
 }
-
-data class Payment(
-    val phoneNumber: String,
-    val amount: Double,
-    val timestamp: Long
-)

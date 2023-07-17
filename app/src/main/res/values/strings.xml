@@ -13,4 +13,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="chama_name_edit_text">Chama Name: %s</string>
+    <string name="description_edit_text">Description: %s</string>
+    <string name="goals_edit_text">Goals: %s</string>
+    <string name="target_per_month_edit_text">Target per Month: %s</string>
+ 
 </resources>

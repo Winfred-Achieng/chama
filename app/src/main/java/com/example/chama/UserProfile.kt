@@ -7,6 +7,7 @@ import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -47,21 +48,16 @@ class UserProfile(private val activity: AppCompatActivity) {
         }
     }
 
-    fun setSaveClickListener(buttonSave: Button) {
-        buttonSave.setOnClickListener {
-            saveUserProfile()
-        }
-    }
-
-    fun setDeleteProfilePictureClickListener(buttonDeleteProfilePicture: Button) {
-        buttonDeleteProfilePicture.setOnClickListener {
-            deleteProfilePicture()
-        }
-    }
-
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         activity.startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            selectedImageUri = data.data
+            imageViewProfilePicture.setImageURI(selectedImageUri)
+        }
     }
 
     fun saveUserProfile() {
@@ -80,96 +76,23 @@ class UserProfile(private val activity: AppCompatActivity) {
         val userId = currentUser?.uid
 
         if (userId != null) {
+            val firestore = FirebaseFirestore.getInstance()
             firestore.collection("userProfiles").document(userId)
                 .set(user)
                 .addOnSuccessListener {
                     // Successful data save
                     // Show a success message or navigate to another screen
-
-                    // Start ChatActivity
-                    startChatActivity(firstName, lastName)
+                    Toast.makeText(activity, "User profile saved successfully", Toast.LENGTH_SHORT).show()
                 }
                 .addOnFailureListener {
                     // Error occurred while saving data
                     // Handle the error
+                    Toast.makeText(activity, "Failed to save user profile", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 
-    private fun deleteProfilePicture() {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val userId = currentUser?.uid
 
-        if (userId != null) {
-            // Delete the profile picture from Firebase Storage
-            storageRef.child("profilePictures/$userId").delete()
-                .addOnSuccessListener {
-                    // Successful deletion
-                    // Show a success message or update the UI accordingly
-                }
-                .addOnFailureListener {
-                    // Error occurred while deleting the profile picture
-                    // Handle the error
-                }
-        }
-    }
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-            selectedImageUri = data.data
-            imageViewProfilePicture.setImageURI(selectedImageUri)
 
-            // Upload the selected image to Firebase Storage
-            val currentUser = FirebaseAuth.getInstance().currentUser
-            val userId = currentUser?.uid
-
-            if (userId != null && selectedImageUri != null) {
-                val imageRef = storageRef.child("profilePictures/$userId")
-
-                imageRef.putFile(selectedImageUri!!)
-                    .addOnSuccessListener { taskSnapshot ->
-                        // Image upload success
-                        // Retrieve the download URL
-                        imageRef.downloadUrl
-                            .addOnSuccessListener { uri ->
-                                // Update the user document in Firestore with the profile picture URL
-                                val user = hashMapOf<String, Any>(
-                                    "profilePicture" to uri.toString()
-                                    // Add other fields if needed
-                                )
-
-                                firestore.collection("userProfiles").document(userId)
-                                    .set(user)
-                                    .addOnSuccessListener {
-                                        // Profile picture URL saved to Firestore
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        // Error occurred while saving profile picture URL to Firestore
-                                    }
-                            }
-                            .addOnFailureListener { exception ->
-                                // Error occurred while retrieving the download URL
-                            }
-                    }
-                    .addOnFailureListener { exception ->
-                        // Error occurred while uploading the image
-                    }
-            }
-        }
-    }
-
-    fun startChatActivity(firstName: String, lastName: String) {
-        val intent = Intent(activity, ChatActivity::class.java)
-        intent.putExtra("firstName", firstName)
-        intent.putExtra("lastName", lastName)
-        activity.startActivity(intent)
-    }
-
-    fun getFirstName(): String {
-        return editTextFirstName.text.toString().trim()
-    }
-
-    fun getLastName(): String {
-        return editTextLastName.text.toString().trim()
-    }
 }
