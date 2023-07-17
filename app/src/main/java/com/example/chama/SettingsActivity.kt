@@ -57,4 +57,8 @@ class SettingsActivity : AppCompatActivity() {
         // Example implementation: recreate the activity
         recreate()
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 54034d0b3baa511f2b95d03c6d2ace6092ed5159
