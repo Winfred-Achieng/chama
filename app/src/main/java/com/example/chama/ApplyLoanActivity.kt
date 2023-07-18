@@ -88,4 +88,6 @@ class ApplyLoanActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+
 }

@@ -3,12 +3,13 @@ package com.example.chama
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.*
+import com.google.firebase.firestore.FirebaseFirestore
 
 class HistoryTransactionActivity : AppCompatActivity() {
 
-    private lateinit var paymentsRef: DatabaseReference
+    private lateinit var firestore: FirebaseFirestore
     private lateinit var paymentDetailsTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,40 +22,41 @@ class HistoryTransactionActivity : AppCompatActivity() {
         }
         paymentDetailsTextView = findViewById(R.id.textViewPaymentDetails)
 
-        // Get a reference to the "payments" node in the Firebase Realtime Database
-        val database = FirebaseDatabase.getInstance()
-        paymentsRef = database.getReference("payments")
+        // Initialize Firestore
+        firestore = FirebaseFirestore.getInstance()
 
-        // Read the payment details from the database
-       // paymentsRef.addValueEventListener(object : ValueEventListener {
-         //   override fun onDataChange(dataSnapshot: DataSnapshot) {
-            //    val paymentDetails = StringBuilder()
+        // Read the payment details from Firestore
+        firestore.collection("payments")
+            .get()
+            .addOnSuccessListener { documents ->
+                val paymentDetails = StringBuilder()
 
-                // Iterate over each child node (payment)
-                //for (childSnapshot in dataSnapshot.children) {
-                    // Parse the payment details
-                   // val payment = childSnapshot.getValue(Payment::class.java)
+                for (document in documents) {
+                    val phoneNumber = document.getString("phoneNumber")
+                    val amount = document.getString("amount")
+                    val timestamp = document.getLong("timestamp")
 
-                    // Append the amount and timestamp to the paymentDetails string
-                    //payment?.let {
-                       // val amount = it.amount
-                       // val timestamp = it.timestamp
+                    val paymentInfo = """
+                        | Phone Number: $phoneNumber
+                        | Amount: $amount
+                        | Timestamp: $timestamp
+                        |-------------------------
+                        |
+                    """.trimMargin()
 
-                        //val paymentInfo = "Amount: $amount, Timestamp: $timestamp\n"
-                        //paymentDetails.append(paymentInfo)
-                    }
-                //}
+                    paymentDetails.append(paymentInfo)
+                }
 
                 // Set the payment details text in the TextView
-                //paymentDetailsTextView.text = paymentDetails.toString()
-           // }
-
-            //override fun onCancelled(databaseError: DatabaseError) {
+                paymentDetailsTextView.text = paymentDetails.toString()
+            }
+            .addOnFailureListener { exception ->
                 // Failed to read payment details
-                // Handle the error
-            //}
-       // })
-    //}
+                showToast("Failed to read payment details: ${exception.message}")
+            }
+    }
 
-    // ...
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
 }

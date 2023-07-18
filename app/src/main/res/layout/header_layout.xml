@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:text="Chama Hub"
-        android:layout_marginStart="67dp"
+        android:layout_marginStart="72dp"
         android:layout_marginEnd="30dp"
 
         android:textColor="@color/white"
@@ -45,7 +45,6 @@
         android:id="@+id/userProfilePicture"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:src="@drawable/ic_profile"
          />
 
 </LinearLayout>

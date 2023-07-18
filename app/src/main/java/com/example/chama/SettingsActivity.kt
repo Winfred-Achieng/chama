@@ -14,7 +14,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        // Find the switch widget
+        /* Find the switch widget
         switchDarkMode = findViewById(R.id.switchDarkMode)
 
         // Set initial state based on user preference or system default
@@ -62,3 +62,5 @@ class SettingsActivity : AppCompatActivity() {
 =======
 }
 >>>>>>> 54034d0b3baa511f2b95d03c6d2ace6092ed5159
+*/}
+}

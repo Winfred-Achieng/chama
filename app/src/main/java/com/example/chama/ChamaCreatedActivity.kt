@@ -59,7 +59,7 @@ class ChamaCreatedActivity : AppCompatActivity() {
         adapter.addFragment(MembersFragment(), "MEMBERS")
         adapter.addFragment(LoansFragment(), "LOANS")
         adapter.addFragment(HistoryFragment(), "HISTORY")
-        //adapter.addFragment(ChatFragment(), "CHAT")
+        adapter.addFragment(ChatFragment(), "CHAT")
 
         val chatFragment = ChatFragment().apply {
             arguments = Bundle().apply {
