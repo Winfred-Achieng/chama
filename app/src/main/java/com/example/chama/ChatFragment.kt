@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ChatFragment : Fragment() {
-
+//
     private lateinit var editTextChatMessage: EditText
     private lateinit var buttonSend: Button
     private lateinit var recyclerViewChat: RecyclerView

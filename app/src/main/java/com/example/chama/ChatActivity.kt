@@ -16,7 +16,7 @@ data class ChatMessage(
     // Add a no-argument constructor
     constructor() : this("", "", 0)
 }
-
+//
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var editTextChatMessage: EditText

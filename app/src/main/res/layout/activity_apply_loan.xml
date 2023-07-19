@@ -8,6 +8,7 @@
     android:padding="25dp"
     tools:context=".ApplyLoanActivity">
 
+
     <TextView
         android:id="@+id/newChamaTV"
         android:text="Apply Loan"

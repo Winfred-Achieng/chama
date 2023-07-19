@@ -12,7 +12,7 @@ class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager,
     override fun getItem(position: Int): Fragment {
         return fragmentList[position]
     }
-
+//
     override fun getCount(): Int {
         return fragmentList.size
     }

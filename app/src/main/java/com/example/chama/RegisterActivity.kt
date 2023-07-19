@@ -30,7 +30,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var registerBtn: Button
     private lateinit var guideLinesTv: TextView
     private lateinit var showPasswordCheckbox: CheckBox
-
+//
 
     private lateinit var auth: FirebaseAuth;
 

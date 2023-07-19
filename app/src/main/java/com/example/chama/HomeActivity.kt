@@ -13,7 +13,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var bio: String
     private lateinit var userProfilePicture: Uri
 
-
+//
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)

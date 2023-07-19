@@ -16,7 +16,7 @@ class OTPVerificationActivity : AppCompatActivity() {
     private lateinit var etOtp: EditText
     private lateinit var btnVerifyOtp: Button
     private lateinit var firestore: FirebaseFirestore
-
+//
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp_verification)

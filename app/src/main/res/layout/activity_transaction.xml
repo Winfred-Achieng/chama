@@ -12,6 +12,7 @@
         android:text="Contribute"
         android:layout_marginBottom="16dp"/>
 
+
     <Button
         android:id="@+id/buttonHistory"
         android:layout_width="match_parent"

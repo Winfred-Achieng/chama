@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class ChatAdapter(private val chatMessages: ArrayList<ChatMessage>) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
-
+//
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_chat_message, parent, false)
         return ChatViewHolder(view)

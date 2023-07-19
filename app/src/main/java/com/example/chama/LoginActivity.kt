@@ -48,7 +48,7 @@ private var showOneTapUI = true
 private lateinit var oneTapClient: SignInClient
 private lateinit var signInRequest: BeginSignInRequest
 
-
+//
 class LoginActivity : AppCompatActivity() {
 
     private var cancellationSignal:CancellationSignal?=null

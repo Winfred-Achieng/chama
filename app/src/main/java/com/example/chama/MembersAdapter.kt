@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chama.R
 import com.example.chama.models.Member
-
+//
 class MembersAdapter(private val members: List<Member>) :
     RecyclerView.Adapter<MembersAdapter.MemberViewHolder>() {
 

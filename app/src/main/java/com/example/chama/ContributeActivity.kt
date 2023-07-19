@@ -22,7 +22,7 @@ import org.json.JSONException
 
 
 class ContributeActivity : AppCompatActivity() {
-
+//
     private lateinit var phoneNumberEditText: EditText
     private lateinit var amountEditText: EditText
     private lateinit var firestore: FirebaseFirestore

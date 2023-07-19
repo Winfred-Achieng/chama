@@ -20,7 +20,7 @@ class MembersFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var membersAdapter: MembersAdapter
-
+//
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
